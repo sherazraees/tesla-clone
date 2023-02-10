@@ -1,12 +1,16 @@
 import transitions from "@material-ui/core/styles/transitions";
 import React, { useState } from "react";
 import style from "styled-components";
+import { selectCars } from "../features/car/carSlice";
+import { useSelector } from "react-redux";
 const image = "https://cdn-icons-png.flaticon.com/512/2516/2516745.png";
 const crossIcon = "https://cdn-icons-png.flaticon.com/512/2723/2723639.png";
 
 function Header() {
   const [openNav, setNav] = useState(false);
+  const cars = useSelector(selectCars);
 
+  console.log(cars);
   const isOpenNav = () => {
     setNav(!openNav);
   };
@@ -16,10 +20,9 @@ function Header() {
         <img src="/images/logo.svg"></img>
       </a>
       <Menu>
-        <a href="#">Model S</a>
-        <a href="#">Model 3</a>
-        <a href="#">Model X</a>
-        <a href="#">Model Y</a>
+        {cars.map((car, index) => (
+          <a href="#">{car}</a>
+        ))}
       </Menu>
 
       <RightMenu>
@@ -31,6 +34,12 @@ function Header() {
         <CloseWrapper>
           <CustomClose onClick={isOpenNav} src={crossIcon}></CustomClose>
         </CloseWrapper>
+        {cars.map((car, index) => (
+          <li>
+            <a href="#">{car}</a>
+          </li>
+        ))}
+
         <li>
           <a href="#">Existing Inventory</a>
         </li>
@@ -45,15 +54,6 @@ function Header() {
         </li>
         <li>
           <a href="#">Raodaster</a>
-        </li>
-        <li>
-          <a href="#">Existing Inventory</a>
-        </li>
-        <li>
-          <a href="#">Existing Inventory</a>
-        </li>
-        <li>
-          <a href="#">Existing Inventory</a>
         </li>
       </BurgerNav>
     </Container>
